@@ -1,41 +1,22 @@
-/* const express = require('express');
+const express = require('express');
 
 const app = express();
-const port = 3000;
+const studentRouter = require('./controllers/student');
+// const port = 3000;
+const dotenv = require('dotenv');
+dotenv.config();
+const port = process.env.PORT;
 
 app.use(express.json());
-app.use(express.urlencoded());
-
-app.get('/eka', (request, response) => {
-    console.log('Kutsuit endpointtia eka');
-    response.send('endpoint eka');
-});
-
-app.get('/toka/:fname', (request, response) => {
-    response.send('Terve ' + request.params.fname);
-});
-
-app.use((request, response, next) => {
-    console.log('Middleware funktio1');
-    next();
-});
-
-app.get('/kolmas/:fname?', (request, response) => {
-    if(request.params.fname) response.send('Terve ' + request.params.fname);
-    else response.send("Terve tuntematon");
-});
-
-app.use((request, response, next) => {
-    console.log('Middleware funktio2');
-    next();
-});
-
-app.post('/addStudent', (request, response) => {
-    response.send(request.body);
-});
+app.use(express.urlencoded({extended:false}));
+app.use('/student', studentRouter);
 
 app.listen(port, () => {
-    console.log('Kuuntelen porttia 3000');
+    console.log('sovellus kuuntelee porttia ' + port);
+});
+
+app.get('/', (request, response) => {
+    response.send('Express API esimerkki ilman tietokantaa');
 });
 
 module.exports = app;

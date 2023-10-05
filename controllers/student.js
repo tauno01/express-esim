@@ -12,8 +12,9 @@ router.get('/:id', (request, response) => {
     response.json(data);
 });
 
-router.post('/:', (request, response) => {
-    let data = student.addStudent();
+router.post('/', (request, response) => {
+    let data = student.addStudent(request.body);
+    console.log(request.body);
     response.json(data);
 });
 
